@@ -84,16 +84,6 @@ namespace Panacea_User_Management.Controllers
                     var isadmin = User.IsInRole("Admin");
                     if (isadmin)
                     {
-                        var Users = await _userManager.GetUsersInRoleAsync("User");
-                        var Admins = await _userManager.GetUsersInRoleAsync("Admin");
-                        var Admins_username = Admins.Select(user => user.UserName.ToString()).ToList();
-                        foreach(string a in Admins_username){
-                            _logger.LogInformation($"{a}");
-                        }
-                        var Active_count = await _context.P_Users.Where(user => user.IsActive).ToListAsync();
-                        TempData["user_count"] = Users.Count();
-                        TempData["Active_Users"] = Active_count.Count();
-                        TempData["InActive_Users"] = Users.Count() - Active_count.Count();
                         return RedirectToAction("Dashboard","Admin");
                     }
                     else

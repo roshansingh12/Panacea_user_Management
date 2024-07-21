@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Panacea_User_Management.Panacea_DbContext;
 using Panacea_User_Management.Models;
 using System.Security.Permissions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Panacea_User_Management.Controllers
 {
@@ -20,8 +21,13 @@ namespace Panacea_User_Management.Controllers
         {
             return View();
         }
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
+            var total_users = await _context.P_Users.ToListAsync();
+            var Active_count = await _context.P_Users.Where(user => user.IsActive).ToListAsync();
+            TempData["user_count"] = total_users.Count();
+            TempData["Active_Users"] = Active_count.Count();
+            TempData["InActive_Users"] = total_users.Count() - Active_count.Count();
             return View();
         }
         [HttpGet]
