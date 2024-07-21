@@ -1,0 +1,80 @@
+﻿@model Panacea_User;
+<style>
+    button{
+        margin-top:10px;
+        padding:10px;
+        border:none;
+        background:green;
+        color:white;
+        border-radius:5px;
+    }
+
+    input {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: orange;
+        color: white;
+        border-radius: 5px;
+    }
+</style>
+<div>
+    <div>
+        <form asp-controller="Admin" asp-action="User_List" method="post">
+            <div class="form-group">
+                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search..." />
+                <br/><input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+        <form asp-controller="Admin" asp-action="User_List" method="post">
+            <div class="form-group">
+                <select value="@ViewData["SortFilter"]" name="sortingstring">
+                    <option value="Email">Email</option>
+                    <option value="FirstName">FirstName</option>
+                    <option value="lastName">LastName</option>
+                    <option value="MiddleName">MiddleName</option>
+                    <option value="Address">Address</option>
+                    <option value="PhoneNumber">PhoneNumber</option>
+                </select>
+                <input type="submit" value="Sort" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    @foreach(Panacea_User user in ViewBag.users)
+    {
+        <div style="display:inline;width:auto;border-top:1px solid black" >
+            <div style ="display:inline">
+                <span style="padding-right:5%">@user.Username</span>
+                <span style="padding-right:5%">@user.PhoneNumber</span>
+                <span style="padding-right:5%">@user.Address</span>
+                @{
+
+                    var active = @user.IsActive?"Active":"Not Active";
+                    <span style="padding-right:5%">@active</span>
+                }
+            </div>
+            <button onclick="document.getElementById('@user.Id').style.display='block'">Edit</button>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" value="@user.Id" style="display:none"/>
+                <br /><button type="submit">Delete</button>
+            </form>
+            <form id="@user.Id" style="display:none" asp-action="Update_user">
+                <div style="display:inline">
+                    <input value="@user.Id" type="hidden" asp-for="Id"/>
+                    <input value="@user.State" type="text" asp-for="State"/>
+                    <input value="@user.City" type="text" asp-for="City"/>
+                    <input value="@user.PinCode" type="text" asp-for="PinCode"/>
+                    <select asp-for="IsActive">
+                        <option value="true">Active</option>
+                        <option value="false">Not Active</option>
+                    </select>
+                    <input value="@user.Address" type="text" asp-for="Address"/>
+                    <input value="@user.PhoneNumber" type="text" asp-for="PhoneNumber"/>
+
+                    <button type="submit">Update</button>
+                    <button onclick="document.getElementById('@user.Id').style.display='none'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    }
+</div>

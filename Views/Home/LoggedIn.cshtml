@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Identity;
+@{
+    var user = User;
+    var role = user.IsInRole("Admin");
+}
+@if (role)
+{
+    <div>Admin</div>
+    <div></div>
+}
+else
+{
+    <div>User!</div>
+}

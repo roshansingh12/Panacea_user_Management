@@ -1,0 +1,46 @@
+﻿@model UserDTO
+@using Microsoft.AspNetCore.Identity;
+@{
+    var user = User;
+    var isAuthenticated = user.Identity.IsAuthenticated;
+}
+<style>
+    button {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: green;
+        color: white;
+        border-radius: 5px;
+    }
+
+    input {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: orange;
+        color: white;
+        border-radius: 5px;
+    }
+</style>
+@if (isAuthenticated)
+{
+    <div>You are already logged in!</div>
+}
+else{
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(model => model.UserName)
+        @Html.EditorFor(model => model.UserName)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.EditorFor(model => model.Password)
+    </div>
+    <div>
+        <button type="submit">Login !</button>
+    </div>
+}
+}

@@ -1,0 +1,83 @@
+﻿@model Panacea_User
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Mvc;
+@{
+    var user = User;
+    var isAuthenticated = user.Identity.IsAuthenticated;
+    var role = user.IsInRole("Admin");
+}
+<style>
+    button {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: green;
+        color: white;
+        border-radius: 5px;
+    }
+
+    input {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid grey;
+        color: black;
+        border-radius: 5px;
+    }
+</style>
+@if(role){
+@using (Html.BeginForm())
+{
+    <div>Register A new User!</div>
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(model => model.FirstName)
+        @Html.EditorFor(model => model.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.MiddleName)
+        @Html.EditorFor(model => model.MiddleName)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.LastName)
+        @Html.EditorFor(model => model.LastName)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Address)
+        @Html.EditorFor(model => model.Address)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.PhoneNumber)
+        @Html.EditorFor(model => model.PhoneNumber)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Email)
+        @Html.EditorFor(model => model.Email)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.City)
+        @Html.EditorFor(model => model.City)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.State)
+        @Html.EditorFor(model => model.State)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.PinCode)
+        @Html.EditorFor(model => model.PinCode)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Username)
+        @Html.EditorFor(model => model.Username)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.EditorFor(model => model.Password)
+    </div>
+    <div>
+        <button type="submit">Create</button>
+    </div>
+}
+}
+else{
+    <div>This page not accessible</div>
+}
