@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Panacea_User_Management.props" />
+</Project>
